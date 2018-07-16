@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             public void run() {
                 if (!mUsername.equals("anonymous")) {
-                    FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now active", System.currentTimeMillis() / 1000L, null);
+                    FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now online", System.currentTimeMillis() / 1000L, null);
                     mMessagesDatabaseReference.push().setValue(friendlyMessage);
                 }
                 Log.e("Username", mUsername);
@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
         Log.e("onResume", onResumeCaller);
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
         if (!mUsername.equals("anonymous") && onResumeCaller.equals("")) {
-            FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now active", System.currentTimeMillis() / 1000L, null);
+            FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now online", System.currentTimeMillis() / 1000L, null);
             mMessagesDatabaseReference.push().setValue(friendlyMessage);
         }
         super.onResume();
@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         if (!mUsername.equals("anonymous")) {
-            FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now inactive", System.currentTimeMillis() / 1000L, null);
+            FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now offline", System.currentTimeMillis() / 1000L, null);
             mMessagesDatabaseReference.push().setValue(friendlyMessage);
         }
     }

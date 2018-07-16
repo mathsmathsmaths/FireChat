@@ -43,8 +43,9 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:textColor="#0cb800"
-            android:backgroundTint="#0cb800"
-            android:textCursorDrawable="@null"/>
+            android:textCursorDrawable="@null"
+            app:backgroundTint="#0cb800"
+            tools:ignore="MissingPrefix" />
 
         <Button
             android:id="@+id/sendButton"
