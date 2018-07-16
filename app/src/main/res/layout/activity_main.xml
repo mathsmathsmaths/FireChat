@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.google.firebase.udacity.friendlychat.MainActivity"
-    android:background="#c8ffdb">
+    android:background="#d2ffe2">
 
     <ListView
         android:id="@+id/messageListView"
