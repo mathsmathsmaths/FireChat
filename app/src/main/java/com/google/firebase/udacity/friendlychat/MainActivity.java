@@ -3,6 +3,7 @@ package com.google.firebase.udacity.friendlychat;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -42,6 +43,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static android.app.Activity.RESULT_OK;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -143,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FriendlyMessage friendlyMessage = new FriendlyMessage(mMessageEditText.getText().toString(), mUsername, null);
+                FriendlyMessage friendlyMessage = new FriendlyMessage(mMessageEditText.getText().toString(), mUsername, System.currentTimeMillis() / 1000L, null);
                 mMessagesDatabaseReference.push().setValue(friendlyMessage);
 
                 // Clear input box
@@ -190,12 +193,21 @@ public class MainActivity extends AppCompatActivity {
         defaultConfigMap.put(FRIENDLY_MSG_LENGTH_KEY, DEFAULT_MSG_LENGTH_LIMIT);
         mFirebaseRemoteConfig.setDefaults(defaultConfigMap);
         fetchConfig();
-        if (!mUsername.equals("anonymous")) {
-            FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now active", null);
-            mMessagesDatabaseReference.push().setValue(friendlyMessage);
-        }
-        Log.e("Username", mUsername);
-        onResumeCaller = "";
+        userActive();
+    }
+
+    private void userActive() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                if (!mUsername.equals("anonymous")) {
+                    FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now active", System.currentTimeMillis() / 1000L, null);
+                    mMessagesDatabaseReference.push().setValue(friendlyMessage);
+                }
+                Log.e("Username", mUsername);
+                onResumeCaller = "";
+            }
+        }, 1000);
     }
 
     @Override
@@ -216,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
                                 // Set the download URL to the message box, so that the user can send it to the database
-                                FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername, downloadUrl.toString());
+                                FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername, System.currentTimeMillis() / 1000L,  downloadUrl.toString());
                                 mMessagesDatabaseReference.push().setValue(friendlyMessage);
                             }
                         });
@@ -236,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         Log.e("onResume", onResumeCaller);
         if (!mUsername.equals("anonymous") && onResumeCaller.equals("")) {
-            FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now active", null);
+            FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now active", System.currentTimeMillis() / 1000L, null);
             mMessagesDatabaseReference.push().setValue(friendlyMessage);
         }
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
@@ -247,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         if (!mUsername.equals("anonymous")) {
-            FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now inactive", null);
+            FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now inactive", System.currentTimeMillis() / 1000L, null);
             mMessagesDatabaseReference.push().setValue(friendlyMessage);
         }
     }
