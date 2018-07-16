@@ -216,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
                 Uri selectedImageUri = data.getData();
 
                 // Get a reference to store file at chat_photos/<FILENAME>
+                assert selectedImageUri != null;
                 StorageReference photoRef = mChatPhotosStorageReference.child(selectedImageUri.getLastPathSegment());
 
                 // Upload file to Firebase Storage
@@ -226,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
                                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
                                 // Set the download URL to the message box, so that the user can send it to the database
+                                assert downloadUrl != null;
                                 FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername, System.currentTimeMillis() / 1000L,  downloadUrl.toString());
                                 mMessagesDatabaseReference.push().setValue(friendlyMessage);
                             }
@@ -245,11 +247,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         Log.e("onResume", onResumeCaller);
+        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
         if (!mUsername.equals("anonymous") && onResumeCaller.equals("")) {
             FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now active", System.currentTimeMillis() / 1000L, null);
             mMessagesDatabaseReference.push().setValue(friendlyMessage);
         }
-        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
         super.onResume();
     }
 
