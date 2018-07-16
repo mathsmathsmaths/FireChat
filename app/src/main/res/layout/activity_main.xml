@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    tools:context="com.google.firebase.udacity.friendlychat.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.google.firebase.udacity.friendlychat.MainActivity"
+    android:background="#c8ffdb">
 
     <ListView
         android:id="@+id/messageListView"
@@ -16,7 +15,9 @@
         android:stackFromBottom="true"
         android:divider="@android:color/transparent"
         android:transcriptMode="alwaysScroll"
-        tools:listitem="@layout/item_message"/>
+        tools:listitem="@layout/item_message"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -25,20 +26,25 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#008809">
 
         <ImageButton
             android:id="@+id/photoPickerButton"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@android:drawable/ic_menu_gallery" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:foreground="@drawable/photoicon"
+            android:background="#0ad000"/>
 
         <EditText
             android:id="@+id/messageEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textColor="#0cb800"
+            android:backgroundTint="#0cb800"
+            android:textCursorDrawable="@null"/>
 
         <Button
             android:id="@+id/sendButton"
@@ -46,7 +52,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:enabled="false"
-            android:text="@string/send_button_label"/>
+            android:text="@string/send_button_label"
+            android:background="#00b70f"
+            android:radius="10dp"
+            android:clickable="true"
+            android:focusable="true" />
 
     </LinearLayout>
 

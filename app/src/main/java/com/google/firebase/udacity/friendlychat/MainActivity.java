@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -97,6 +98,14 @@ public class MainActivity extends AppCompatActivity {
         mPhotoPickerButton = (ImageButton) findViewById(R.id.photoPickerButton);
         mMessageEditText = (EditText) findViewById(R.id.messageEditText);
         mSendButton = (Button) findViewById(R.id.sendButton);
+
+        mMessageEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                scrollMyListViewToBottom();
+                return true;
+            }
+        });
 
         //findViewById(R.id.refresh).setVisibility(View.GONE);
 
@@ -313,6 +322,16 @@ public class MainActivity extends AppCompatActivity {
         detachDatabaseReadListener();
     }
 
+    private void scrollMyListViewToBottom() {
+        mMessageListView.post(new Runnable() {
+            @Override
+            public void run() {
+                // Select the last row so it will scroll into view...
+                mMessageListView.setSelection(mMessageAdapter.getCount() - 1);
+            }
+        });
+    }
+
     private void attachDatabaseReadListener() {
         if (mChildEventListener == null) {
             mChildEventListener = new ChildEventListener() {
@@ -320,6 +339,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     FriendlyMessage friendlyMessage = dataSnapshot.getValue(FriendlyMessage.class);
                     mMessageAdapter.add(friendlyMessage);
+                    scrollMyListViewToBottom();
                 }
 
                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
