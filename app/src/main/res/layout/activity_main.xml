@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.google.firebase.udacity.friendlychat.MainActivity"
-    android:background="#d2ffe2">
+    android:background="#d2ffe2"
+    android:paddingTop="10dp">
 
     <ListView
         android:id="@+id/messageListView"
@@ -14,8 +15,14 @@
         android:layout_above="@+id/linearLayout"
         android:stackFromBottom="true"
         android:divider="@android:color/transparent"
-        android:transcriptMode="alwaysScroll"
-        tools:listitem="@layout/item_message" />
+        android:transcriptMode="alwaysScroll" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:foreground="#7b7b7b"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/messageListView"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
