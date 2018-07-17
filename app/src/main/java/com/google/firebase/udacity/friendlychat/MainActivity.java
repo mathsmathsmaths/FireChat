@@ -211,6 +211,8 @@ public class MainActivity extends AppCompatActivity {
         if (!mUsername.equals("anonymous") && !signedIn) {
             FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now online", System.currentTimeMillis() / 1000L, null);
             mMessagesDatabaseReference.push().setValue(friendlyMessage);
+            mMessageAdapter.add(friendlyMessage);
+            scrollMyListViewToBottom();
         }
         signedIn = true;
     }
