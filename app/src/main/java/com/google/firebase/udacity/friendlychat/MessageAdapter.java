@@ -27,8 +27,6 @@ public class MessageAdapter extends ArrayAdapter<FriendlyMessage> {
         ImageView photoImageView = (ImageView) convertView.findViewById(R.id.photoImageView);
         TextView messageTextView = (TextView) convertView.findViewById(R.id.messageTextView);
         TextView authorTextView = (TextView) convertView.findViewById(R.id.nameTextView);
-        TextView whiteSpace = (TextView) convertView.findViewById(R.id.whitespace);
-        whiteSpace.setText("");
 
         FriendlyMessage message = getItem(position);
 
@@ -44,6 +42,11 @@ public class MessageAdapter extends ArrayAdapter<FriendlyMessage> {
             messageTextView.setVisibility(View.VISIBLE);
             photoImageView.setVisibility(View.GONE);
             messageTextView.setText(message.getText());
+            if (messageTextView.getText().toString().trim().equals("")) {
+                messageTextView.setTextSize(0);
+            } else {
+                messageTextView.setTextSize(20);
+            }
             authorTextView.setText(message.getName());
         }
 

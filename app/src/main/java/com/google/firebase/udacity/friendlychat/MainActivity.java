@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private StorageReference mChatPhotosStorageReference;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     String onResumeCaller = "onCreate";
-    boolean signedIn;
+    boolean signedIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     onSignedInInitialize(user.getDisplayName());
-                    //Log.e("Debug Firebase", "Sent active report");
+                    onResumeCaller = "";
                     signInNotif();
                 } else {
 
