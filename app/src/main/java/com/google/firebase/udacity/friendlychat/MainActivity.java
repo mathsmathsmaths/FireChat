@@ -3,7 +3,6 @@ package com.google.firebase.udacity.friendlychat;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -75,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private StorageReference mChatPhotosStorageReference;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     String onResumeCaller = "onCreate";
+    boolean signedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +169,12 @@ public class MainActivity extends AppCompatActivity {
                     // User is signed in
                     onSignedInInitialize(user.getDisplayName());
                     //Log.e("Debug Firebase", "Sent active report");
+                    signInNotif();
                 } else {
+
+                    //FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now offline", System.currentTimeMillis() / 1000L, null);
+
+                    signedIn = false;
                     // User is signed out
                     onSignedOutCleanup();
                     startActivityForResult(
@@ -200,21 +205,14 @@ public class MainActivity extends AppCompatActivity {
         defaultConfigMap.put(FRIENDLY_MSG_LENGTH_KEY, DEFAULT_MSG_LENGTH_LIMIT);
         mFirebaseRemoteConfig.setDefaults(defaultConfigMap);
         fetchConfig();
-        userActive();
     }
 
-    private void userActive() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                if (!mUsername.equals("anonymous")) {
-                    FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now online", System.currentTimeMillis() / 1000L, null);
-                    mMessagesDatabaseReference.push().setValue(friendlyMessage);
-                }
-                Log.e("Username", mUsername);
-                onResumeCaller = "";
-            }
-        }, 1000);
+    private void signInNotif() {
+        if (!mUsername.equals("anonymous") && !signedIn) {
+            FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now online", System.currentTimeMillis() / 1000L, null);
+            mMessagesDatabaseReference.push().setValue(friendlyMessage);
+        }
+        signedIn = true;
     }
 
     @Override
@@ -294,6 +292,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sign_out_menu:
+                FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now offline", System.currentTimeMillis() / 1000L, null);
+                mMessagesDatabaseReference.push().setValue(friendlyMessage);
+                Log.e("Logout", mUsername);
                 AuthUI.getInstance().signOut(this);
                 return true;
 //            case R.id.refresh:
