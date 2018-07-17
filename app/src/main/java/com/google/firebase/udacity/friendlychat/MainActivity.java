@@ -3,6 +3,7 @@ package com.google.firebase.udacity.friendlychat;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -208,13 +209,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signInNotif() {
-        if (!mUsername.equals("anonymous") && !signedIn) {
-            FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now online", System.currentTimeMillis() / 1000L, null);
-            mMessagesDatabaseReference.push().setValue(friendlyMessage);
-            mMessageAdapter.add(friendlyMessage);
-            scrollMyListViewToBottom();
-        }
-        signedIn = true;
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                if (!mUsername.equals("anonymous") && !signedIn) {
+                    FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now online", System.currentTimeMillis() / 1000L, null);
+                    mMessagesDatabaseReference.push().setValue(friendlyMessage);
+//            mMessageAdapter.add(friendlyMessage);
+//            scrollMyListViewToBottom();
+                }
+                signedIn = true;
+            }
+        }, 1000);
     }
 
     @Override
@@ -258,8 +264,14 @@ public class MainActivity extends AppCompatActivity {
         Log.e("onResume", onResumeCaller);
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
         if (!mUsername.equals("anonymous") && onResumeCaller.equals("")) {
-            FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now online", System.currentTimeMillis() / 1000L, null);
-            mMessagesDatabaseReference.push().setValue(friendlyMessage);
+            attachDatabaseReadListener();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now online", System.currentTimeMillis() / 1000L, null);
+                    mMessagesDatabaseReference.push().setValue(friendlyMessage);
+                }
+            }, 1000);
         }
         super.onResume();
     }
@@ -271,16 +283,17 @@ public class MainActivity extends AppCompatActivity {
             FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now offline", System.currentTimeMillis() / 1000L, null);
             mMessagesDatabaseReference.push().setValue(friendlyMessage);
         }
+        detachDatabaseReadListener();
+        if (mAuthStateListener != null) {
+            mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+        }
+        mMessageAdapter.clear();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (mAuthStateListener != null) {
-            mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
-        }
-        mMessageAdapter.clear();
-        detachDatabaseReadListener();
+
     }
 
     @Override
