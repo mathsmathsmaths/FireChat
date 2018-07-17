@@ -42,12 +42,13 @@ public class MessageAdapter extends ArrayAdapter<FriendlyMessage> {
             messageTextView.setVisibility(View.VISIBLE);
             photoImageView.setVisibility(View.GONE);
             messageTextView.setText(message.getText());
+            authorTextView.setText(message.getName());
             if (messageTextView.getText().toString().trim().equals("")) {
                 messageTextView.setTextSize(0);
+                messageTextView.setVisibility(View.GONE);
             } else {
                 messageTextView.setTextSize(20);
             }
-            authorTextView.setText(message.getName());
         }
 
 

@@ -11,7 +11,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:foreground="#038800"
         android:layout_marginBottom="10dp"
         android:alpha="0.5"
@@ -26,8 +26,14 @@
         tools:text="Name"
         android:textColor="#008007"
         android:textSize="12sp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"/>
+        android:paddingLeft="9dp"
+        android:layout_marginLeft="7dp"
+        android:paddingRight="9dp"
+        android:layout_marginRight="7dp"
+        android:radius="16dp"
+        android:background="@drawable/name"
+        android:color="#7d0073ff"
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:id="@+id/messageTextView"
@@ -38,9 +44,14 @@
         tools:text="Message"
         android:textColor="#009f08"
         android:textSize="18sp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="10dp"/>
+        android:paddingLeft="9dp"
+        android:layout_marginLeft="7dp"
+        android:paddingRight="9dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/name"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
 
     <ImageView
         android:id="@+id/photoImageView"
