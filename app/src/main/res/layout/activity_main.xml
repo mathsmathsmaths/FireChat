@@ -19,7 +19,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:foreground="#7b7b7b"
+        android:foreground="#ff823f"
         android:layout_marginTop="10dp"
         android:layout_below="@id/messageListView"/>
 
@@ -31,14 +31,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:orientation="horizontal"
-        android:background="#cccccc">
+        android:background="#ffc6aa">
 
         <ImageButton
             android:id="@+id/photoPickerButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:foreground="@drawable/photoicon"
-            android:background="#dadada" />
+            android:background="#ff8c00" />
 
         <EditText
             android:id="@+id/messageEditText"
@@ -46,9 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:textColor="#0015ff"
+            android:textColor="#ff6200"
             android:textCursorDrawable="@null"
-            app:backgroundTint="#0015ff"
+            app:backgroundTint="#ff7700"
             tools:ignore="MissingPrefix"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"/>
@@ -60,7 +60,7 @@
             android:layout_gravity="bottom"
             android:enabled="false"
             android:text="@string/send_button_label"
-            android:background="#aeaeae"
+            android:background="#ff7a21"
             android:radius="10dp"
             android:clickable="true"
             android:focusable="true"
