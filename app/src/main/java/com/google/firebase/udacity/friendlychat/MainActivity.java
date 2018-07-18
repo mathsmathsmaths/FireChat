@@ -184,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
                                     .setIsSmartLockEnabled(false)
+                                    .setTheme(R.style.FirebaseUIAuth)
                                     .setProviders(
                                             AuthUI.EMAIL_PROVIDER,
                                             AuthUI.GOOGLE_PROVIDER)

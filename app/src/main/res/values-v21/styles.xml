@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="FirebaseUIAuth" parent="FirebaseUI">
+        <item name="android:statusBarColor">#8f3700</item>
+        <item name="colorPrimaryDark">#ff7300</item>
+        <item name="colorAccent">#ff6f00</item>
+    </style>
+</resources>

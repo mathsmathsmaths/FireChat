@@ -1,11 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="FirebaseUI">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">#8f3700</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">#8f3700</item>
 
         <item name="android:colorButtonNormal">@drawable/button_selector</item>
         <item name="colorButtonNormal">@drawable/button_selector</item>
@@ -14,6 +15,11 @@
 
     <style name="FriendlyButtonStyle" parent="Widget.AppCompat.Button">
         <item name="android:textColor">@color/colorTitle</item>
+    </style>
 
+    <style name="FirebaseUIAuth" parent="FirebaseUI">
+        <item name="android:statusBarColor">#8f3700</item>
+        <item name="colorPrimaryDark">#ff7300</item>
+        <item name="colorAccent">#ff6f00</item>
     </style>
 </resources>
