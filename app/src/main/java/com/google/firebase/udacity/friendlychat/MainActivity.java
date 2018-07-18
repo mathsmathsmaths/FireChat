@@ -355,6 +355,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // Select the last row so it will scroll into view...
+                mMessageListView.invalidateViews();
                 mMessageListView.setSelection(mMessageAdapter.getCount() - 1);
             }
         });
@@ -368,6 +369,7 @@ public class MainActivity extends AppCompatActivity {
                     FriendlyMessage friendlyMessage = dataSnapshot.getValue(FriendlyMessage.class);
                     mMessageAdapter.add(friendlyMessage);
                     scrollMyListViewToBottom();
+                    mMessageListView.invalidateViews();
                 }
 
                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
