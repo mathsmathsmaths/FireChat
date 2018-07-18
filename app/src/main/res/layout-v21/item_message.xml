@@ -12,7 +12,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:foreground="#038800"
+        android:foreground="#000a59"
         android:layout_marginBottom="10dp"
         android:alpha="0.5"
         android:elevation="10dp"/>
@@ -24,16 +24,16 @@
         android:layout_weight="0"
         android:textAppearance="?android:attr/textAppearanceSmall"
         tools:text="Name"
-        android:textColor="#008007"
-        android:textSize="12sp"
+        android:textColor="#002364"
+        android:textSize="16sp"
         android:paddingLeft="9dp"
         android:layout_marginLeft="7dp"
         android:paddingRight="9dp"
         android:layout_marginRight="7dp"
         android:radius="16dp"
         android:background="@drawable/name"
-        android:color="#7d0073ff"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:textStyle="italic"/>
 
     <TextView
         android:id="@+id/messageTextView"
@@ -42,8 +42,8 @@
         android:layout_weight="0"
         android:textAppearance="?android:attr/textAppearanceLarge"
         tools:text="Message"
-        android:textColor="#009f08"
-        android:textSize="18sp"
+        android:textColor="#00355d"
+        android:textSize="27sp"
         android:paddingLeft="9dp"
         android:layout_marginLeft="7dp"
         android:paddingRight="9dp"
@@ -53,10 +53,19 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"/>
 
-    <ImageView
-        android:id="@+id/photoImageView"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true" />
+        android:background="@drawable/name"
+        android:padding="10dp"
+        android:id="@+id/imageviewcontainer"
+        android:layout_marginBottom="10dp">
+        <ImageView
+            android:id="@+id/photoImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:radius="25dp" />
+    </RelativeLayout>
 
 </LinearLayout>

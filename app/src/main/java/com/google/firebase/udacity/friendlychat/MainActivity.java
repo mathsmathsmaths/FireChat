@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     String onResumeCaller = "onCreate";
     boolean signedIn = false;
+    boolean isUploadingPic = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         mPhotoPickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isUploadingPic = true;
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/jpeg");
                 intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
@@ -187,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
                                             AuthUI.GOOGLE_PROVIDER)
                                     .build(),
                             RC_SIGN_IN);
+                    getSupportActionBar().setTitle("FireChat Login");
                 }
             }
         };
@@ -242,7 +245,6 @@ public class MainActivity extends AppCompatActivity {
                                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
                                 // Set the download URL to the message box, so that the user can send it to the database
-                                assert downloadUrl != null;
                                 FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername, System.currentTimeMillis() / 1000L,  downloadUrl.toString());
                                 mMessagesDatabaseReference.push().setValue(friendlyMessage);
                             }
@@ -263,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         Log.e("onResume", onResumeCaller);
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
-        if (!mUsername.equals("anonymous") && onResumeCaller.equals("")) {
+        if (!mUsername.equals("anonymous") && onResumeCaller.equals("") && !isUploadingPic) {
             attachDatabaseReadListener();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -273,21 +275,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             }, 1000);
         }
+        if (isUploadingPic) {
+            isUploadingPic = false;
+        }
         super.onResume();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (!mUsername.equals("anonymous")) {
+        if (!mUsername.equals("anonymous") && !isUploadingPic) {
             FriendlyMessage friendlyMessage = new FriendlyMessage("", mUsername + " is now offline", System.currentTimeMillis() / 1000L, null);
             mMessagesDatabaseReference.push().setValue(friendlyMessage);
         }
-        detachDatabaseReadListener();
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        detachDatabaseReadListener();
         mMessageAdapter.clear();
+        super.onDestroy();
     }
 
     @Override
@@ -336,6 +346,7 @@ public class MainActivity extends AppCompatActivity {
         mUsername = ANONYMOUS;
         mMessageAdapter.clear();
         detachDatabaseReadListener();
+        getSupportActionBar().setTitle("FireChat Login");
     }
 
     private void scrollMyListViewToBottom() {

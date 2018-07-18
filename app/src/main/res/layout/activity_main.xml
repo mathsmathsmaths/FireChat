@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.google.firebase.udacity.friendlychat.MainActivity"
-    android:background="#d2ffe2">
+    android:background="#ffffff">
 
     <ListView
         android:id="@+id/messageListView"
@@ -31,14 +31,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:orientation="horizontal"
-        android:background="#008809">
+        android:background="#cccccc">
 
         <ImageButton
             android:id="@+id/photoPickerButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:foreground="@drawable/photoicon"
-            android:background="#0ad000"/>
+            android:background="#dadada" />
 
         <EditText
             android:id="@+id/messageEditText"
@@ -46,22 +46,27 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:textColor="#0cb800"
+            android:textColor="#0015ff"
             android:textCursorDrawable="@null"
-            app:backgroundTint="#0cb800"
-            tools:ignore="MissingPrefix" />
+            app:backgroundTint="#0015ff"
+            tools:ignore="MissingPrefix"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
         <Button
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:enabled="false"
             android:text="@string/send_button_label"
-            android:background="#00b70f"
+            android:background="#aeaeae"
             android:radius="10dp"
             android:clickable="true"
-            android:focusable="true" />
+            android:focusable="true"
+            android:textColor="#2f2f2f"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
 
     </LinearLayout>
 

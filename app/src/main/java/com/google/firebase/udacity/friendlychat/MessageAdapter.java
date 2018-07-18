@@ -35,6 +35,7 @@ public class MessageAdapter extends ArrayAdapter<FriendlyMessage> {
             messageTextView.setVisibility(View.GONE);
             authorTextView.setText(message.getName());
             photoImageView.setVisibility(View.VISIBLE);
+            convertView.findViewById(R.id.imageviewcontainer).setVisibility(View.VISIBLE);
             Glide.with(photoImageView.getContext())
                     .load(message.getPhotoUrl())
                     .into(photoImageView);
@@ -43,11 +44,12 @@ public class MessageAdapter extends ArrayAdapter<FriendlyMessage> {
             photoImageView.setVisibility(View.GONE);
             messageTextView.setText(message.getText());
             authorTextView.setText(message.getName());
+            convertView.findViewById(R.id.imageviewcontainer).setVisibility(View.GONE);
             if (messageTextView.getText().toString().trim().equals("")) {
                 messageTextView.setTextSize(0);
                 messageTextView.setVisibility(View.GONE);
             } else {
-                messageTextView.setTextSize(20);
+                messageTextView.setTextSize(27);
             }
         }
 
