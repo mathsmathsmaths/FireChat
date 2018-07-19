@@ -11,21 +11,21 @@
         android:id="@+id/messageListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout"
+        android:layout_above="@+id/invisible"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
-        android:paddingRight="16dp"
-        android:paddingLeft="16dp"
-        android:dividerHeight="15dp"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        android:dividerHeight="8dp"
         android:headerDividersEnabled="true"
-        android:divider="@drawable/divider"/>
+        android:divider="@drawable/divider"
+        android:footerDividersEnabled="true"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:foreground="#ff823f"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/messageListView"/>
+        android:layout_height="0dp"
+        android:layout_above="@+id/linearLayout"
+        android:id="@+id/invisible"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"

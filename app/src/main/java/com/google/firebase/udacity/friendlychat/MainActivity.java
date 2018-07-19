@@ -369,6 +369,8 @@ public class MainActivity extends AppCompatActivity {
                     FriendlyMessage friendlyMessage = dataSnapshot.getValue(FriendlyMessage.class);
                     mMessageAdapter.add(friendlyMessage);
                     scrollMyListViewToBottom();
+                    mMessageListView.addHeaderView(new View(MainActivity.this));
+                    mMessageListView.addFooterView(new View(MainActivity.this));
                     mMessageListView.invalidateViews();
                 }
 
