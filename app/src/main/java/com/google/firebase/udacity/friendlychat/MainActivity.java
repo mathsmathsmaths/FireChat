@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -78,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     String onResumeCaller = "onCreate";
     boolean signedIn = false;
     boolean isUploadingPic = false;
+    //Parcelable listViewInstanceState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,23 +211,8 @@ public class MainActivity extends AppCompatActivity {
         defaultConfigMap.put(FRIENDLY_MSG_LENGTH_KEY, DEFAULT_MSG_LENGTH_LIMIT);
         mFirebaseRemoteConfig.setDefaults(defaultConfigMap);
         fetchConfig();
-        mMessageListView.addFooterView(new TextView(MainActivity.this));
-        mMessageListView.addHeaderView(new TextView(MainActivity.this));
-        //pictureRefresh();
-    }
-
-    private void pictureRefresh() {
-        final int index = mMessageListView.getFirstVisiblePosition();
-        View v = mMessageListView.getChildAt(0);
-        final int top = (v == null) ? 0 : (v.getTop() - mMessageListView.getPaddingTop());
-        mMessageListView.invalidateViews();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                mMessageListView.setSelectionFromTop(index, top);
-                pictureRefresh();
-            }
-        }, 5000);
+        mMessageListView.addFooterView(new View(MainActivity.this));
+        mMessageListView.addHeaderView(new View(MainActivity.this));
     }
 
     private void signInNotif() {
@@ -341,16 +326,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Logout", mUsername);
                 AuthUI.getInstance().signOut(this);
                 return true;
-//            case R.id.refresh:
-//                super.onPause();
-//                mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
-//                super.onStop();
-//                mMessageAdapter.clear();
-//                List<FriendlyMessage> friendlyMessages = new ArrayList<>();
-//                mMessageAdapter = new MessageAdapter(this, R.layout.item_message, friendlyMessages);
-//                mMessageListView.setAdapter(mMessageAdapter);
-//                super.onResume();
-//                mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+            case R.id.refresh_button:
+                mMessageListView.invalidateViews();
             default:
                 return super.onOptionsItemSelected(item);
         }

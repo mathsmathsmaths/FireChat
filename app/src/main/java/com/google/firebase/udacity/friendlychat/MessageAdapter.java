@@ -2,6 +2,7 @@ package com.google.firebase.udacity.friendlychat;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -24,11 +25,11 @@ public class MessageAdapter extends ArrayAdapter<FriendlyMessage> {
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.item_message, parent, false);
         }
 
-        ImageView photoImageView = (ImageView) convertView.findViewById(R.id.photoImageView);
+        final ImageView photoImageView = (ImageView) convertView.findViewById(R.id.photoImageView);
         TextView messageTextView = (TextView) convertView.findViewById(R.id.messageTextView);
         TextView authorTextView = (TextView) convertView.findViewById(R.id.nameTextView);
 
-        FriendlyMessage message = getItem(position);
+        final FriendlyMessage message = getItem(position);
 
         boolean isPhoto = message.getPhotoUrl() != null;
         if (isPhoto) {
@@ -36,9 +37,20 @@ public class MessageAdapter extends ArrayAdapter<FriendlyMessage> {
             authorTextView.setText(message.getName());
             photoImageView.setVisibility(View.VISIBLE);
             convertView.findViewById(R.id.imageviewcontainer).setVisibility(View.VISIBLE);
-            Glide.with(photoImageView.getContext())
-                    .load(message.getPhotoUrl())
-                    .into(photoImageView);
+            photoImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    loadImage(photoImageView, message);
+                }
+            });
+            for (int i = 0; i < 100; i++) {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        loadImage(photoImageView, message);
+                    }
+                }, 500);
+            }
         } else {
             messageTextView.setVisibility(View.VISIBLE);
             photoImageView.setVisibility(View.GONE);
@@ -55,5 +67,11 @@ public class MessageAdapter extends ArrayAdapter<FriendlyMessage> {
 
 
         return convertView;
+    }
+
+    private void loadImage(final ImageView photoImageView, final FriendlyMessage message) {
+        Glide.with(photoImageView.getContext())
+                .load(message.getPhotoUrl())
+                .into(photoImageView);
     }
 }
