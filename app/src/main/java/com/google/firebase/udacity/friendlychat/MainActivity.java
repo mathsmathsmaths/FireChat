@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -210,6 +211,23 @@ public class MainActivity extends AppCompatActivity {
         defaultConfigMap.put(FRIENDLY_MSG_LENGTH_KEY, DEFAULT_MSG_LENGTH_LIMIT);
         mFirebaseRemoteConfig.setDefaults(defaultConfigMap);
         fetchConfig();
+        mMessageListView.addFooterView(new TextView(MainActivity.this));
+        mMessageListView.addHeaderView(new TextView(MainActivity.this));
+        //pictureRefresh();
+    }
+
+    private void pictureRefresh() {
+        final int index = mMessageListView.getFirstVisiblePosition();
+        View v = mMessageListView.getChildAt(0);
+        final int top = (v == null) ? 0 : (v.getTop() - mMessageListView.getPaddingTop());
+        mMessageListView.invalidateViews();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                mMessageListView.setSelectionFromTop(index, top);
+                pictureRefresh();
+            }
+        }, 5000);
     }
 
     private void signInNotif() {
@@ -369,8 +387,6 @@ public class MainActivity extends AppCompatActivity {
                     FriendlyMessage friendlyMessage = dataSnapshot.getValue(FriendlyMessage.class);
                     mMessageAdapter.add(friendlyMessage);
                     scrollMyListViewToBottom();
-                    mMessageListView.addHeaderView(new View(MainActivity.this));
-                    mMessageListView.addFooterView(new View(MainActivity.this));
                     mMessageListView.invalidateViews();
                 }
 
